@@ -1,0 +1,19 @@
+.resource-button {
+    margin: 10px 0;
+}
+.resource-count {
+    margin: 4px 0;
+}
+
+.allocation-row {
+    margin: 10px 0;
+}
+
+.allocation-item {
+    min-width: 150px;
+    display: inline-block;
+    text-align: center;
+}
+.allocation-item-count {
+    margin-right: 10px;
+}

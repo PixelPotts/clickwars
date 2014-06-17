@@ -1,0 +1,83 @@
+<!doctype html />
+    <head>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+
+    <body>
+
+
+        <div class="container">
+
+            <h1>ClickWars</h1>
+
+            <!-- Header -->
+            <div class="row">
+
+                <!-- Resources -->
+                <div class="col-md-4">
+
+                    <h3>Resources</h3>
+
+                    <div id="resources">
+                        <div class="resource-button">
+                            <button type="button" class="btn btn-sm btn-default" data-bind="click: mineMinerals">Mine Crystal</button>
+                            <span class="resource-count pull-right">0</span>
+                        </div>
+                        <div class="resource-button">
+                            <button type="button" class="btn btn-sm btn-default">Frack Xenon</button>
+                            <span class="resource-count pull-right">0</span>
+                        </div>
+                        <div class="resource-button">
+                            <button type="button" class="btn btn-sm btn-default">Hire Recruits</button>
+                            <span class="resource-count pull-right">0</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-8">
+                    <h3>Allocation</h3>
+
+                    <div class="allocation-row">
+                        <button type="button" class="btn btn-default btn-xs">-100</button>
+                        <button type="button" class="btn btn-default btn-xs">-10</button>
+                        <button type="button" class="btn btn-default btn-xs">&nbsp;<&nbsp;</button>
+                        <span class="allocation-item">Marines<span class="allocation-item-count pull-right badge">100</span></span>
+                        <button type="button" class="btn btn-default btn-xs">&nbsp;>&nbsp;</button>
+                        <button type="button" class="btn btn-default btn-xs">+10</button>
+                        <button type="button" class="btn btn-default btn-xs">+100</button>
+                    </div>
+                    <div class="allocation-row">
+                        <button type="button" class="btn btn-default btn-xs">-100</button>
+                        <button type="button" class="btn btn-default btn-xs">-10</button>
+                        <button type="button" class="btn btn-default btn-xs">&nbsp;<&nbsp;</button>
+                        <span class="allocation-item">Marines<span class="allocation-item-count pull-right badge">100</span></span>
+                        <button type="button" class="btn btn-default btn-xs">&nbsp;>&nbsp;</button>
+                        <button type="button" class="btn btn-default btn-xs">+10</button>
+                        <button type="button" class="btn btn-default btn-xs">+100</button>
+                    </div>
+                    <div class="allocation-row">
+                        <button type="button" class="btn btn-default btn-xs">-100</button>
+                        <button type="button" class="btn btn-default btn-xs">-10</button>
+                        <button type="button" class="btn btn-default btn-xs">&nbsp;<&nbsp;</button>
+                        <span class="allocation-item">Marines<span class="allocation-item-count pull-right badge">100</span></span>
+                        <button type="button" class="btn btn-default btn-xs">&nbsp;>&nbsp;</button>
+                        <button type="button" class="btn btn-default btn-xs">+10</button>
+                        <button type="button" class="btn btn-default btn-xs">+100</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </body>
