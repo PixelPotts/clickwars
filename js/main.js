@@ -44,8 +44,8 @@ $(document).ready(function(){
     // Resources
     self.resources = ko.observableArray([
       Crystal = new Resource('Crystal',0,8),
-      new Resource('Xenon',0,3),
-      new Resource('Recruits',0,1)
+      Xenon = new Resource('Xenon',0,3),
+      Recruits = new Resource('Recruits',0,1)
     ]);
     self.mineResource = function(){
       this.value(this.value() + this.mineIncrement);
