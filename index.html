@@ -16,7 +16,7 @@
 
         <div class="container">
 
-            <span class="resource-alert-message">Status: <span class="label label-success">Normal</span></span>
+            <label class="resource-alert-message">Status: <span class="" data-bind="attr: {'class':gameStatusBadge}, text: gameStatusMsg"></span></label>
 
             <h1>War Clickers 2000</h1>
 
@@ -31,7 +31,7 @@
                     <div id="resources" data-bind="foreach: resources">
                         <div class="resource-button">
                             <button type="button" class="btn btn-sm btn-default" data-bind="click: function(){$parent.mine(this);}">Mine <span data-bind="text: name"></span></button>
-                            <span class="resource-count pull-right badge alert-default" data-bind="text: $root.player[name]"></span>
+                            <span class="resource-count pull-right badge" data-bind="text: $root.player[name]"></span>
                         </div>
                     </div>
 
@@ -63,7 +63,7 @@
             <div class="row">
 
                 <!-- Resources -->
-                <div class="col-md-5">
+                <div class="col-md-6">
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
@@ -83,7 +83,7 @@
                                 <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(this,10);}">+10</button>
                                 <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(this,100);}">+100</button>
                                 <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(this,100);}">+1k</button>
-                                <span class="resource-count pull-right badge alert-default" data-bind="text: $root.player[name]"></span>
+                                <span class="resource-count pull-right badge" data-bind="text: $root.player[name]"></span>
                                 <span class="label label-danger" data-bind="text: alertMessage"></span>
                             </div>
                             <!-- /ko -->

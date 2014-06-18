@@ -8,43 +8,46 @@
  *
  */
 
-function Resource(name, increment, description){
-  this.name = name;
-  this.increment = increment;
-  this.description = description;
-}
-
-function Unit(name, description, resourceCost) {
-  this.name = name;
-  this.description = description;
-  this.resourceCost = resourceCost || {};
-}
-
 function ClickWarsViewModel() {
   // Setup game parameters
+  var self = this;
   this.resources = ko.observableArray(_.toArray(Resources));
   this.units = ko.observableArray(_.toArray(Units));
   this.buildings = ko.observableArray(_.toArray(Buildings));
 
   // Initialize player
   this.player = window.player;
-  _.each(this.resources(), function(resource) {
-    this.player[resource.name] = ko.observable(0);
+  _.each(self.resources(), function(resource) {
+    self.player[resource.name] = ko.observable(0);
   });
-  _.each(this.units(), function(unit) {
-    this.player[unit.name] = ko.observable(0);
+  _.each(self.units(), function(unit) {
+    self.player[unit.name] = ko.observable(0);
     // alertMessage should probably not exist on the unit object, unless we call it a unit view model.
     unit.alertMessage = ko.observable('');
   });
-  _.each(this.buildings(), function(building) {
-    this.player[building.name] = ko.observable(0);
+  _.each(self.buildings(), function(building) {
+    self.player[building.name] = ko.observable(0);
     // alertMessage should probably not exist on the unit object, unless we call it a unit view model.
     building.alertMessage = ko.observable('');
   });
 
+  // Game status - check critical resources' balance
+  self.criticalFlag = 0;
+  self.gameStatusMsg = ko.observable('Normal');
+  self.gameStatusBadge = ko.computed(function(){
+    self.criticalFlag = 0; // reset
+    _.each(self.resources(), function(resource){
+      if(resource.critical && self.player[resource.name]() < 0){
+        self.criticalFlag = 1;
+      }
+    });
+    self.gameStatusMsg(self.criticalFlag ? 'Critical' : 'Normal');
+    return self.criticalFlag == 1 ? "label alert-danger" : "label alert-success";
+  },this);
 }
 
 $.extend(ClickWarsViewModel.prototype, {
+
   mine: function(resource) {
     addObservable(this.player[resource.name], resource.increment);
   },
@@ -94,17 +97,21 @@ $.extend(ClickWarsViewModel.prototype, {
     });
   },
 
-  recharge: function() { // subtract resources to pay for units living expenses
-    _.each(this.units(), function(unit){
-      _.each(unit.rechargeCost, function(cost, resourceName){
-        var unitCount = this.player[unit.name]();
-        if(unitCount > 0){
+  recharge: function() { // subtract resources to pay for units' living expenses
+    _.each(this.units(), function(unit) {
+      var unitCount = this.player[unit.name]();
+      if(unitCount > 0){
+        _.each(unit.rechargeCost, function(cost, resourceName){
           var totalCost = cost * unitCount;
           addObservable(this.player[resourceName], 0-totalCost);
-          console.log(unit.name+' recharged for '+cost+' '+resourceName+'s');
-        }
-      })
-    })
+          console.log(unit.name+' recharged for '+totalCost+' '+resourceName+'s');
+        })
+      }
+    });
+  },
+
+  autoMine: function() {
+
   }
 });
 
@@ -122,6 +129,7 @@ $(document).ready(function() {
   var framerate = 1000; //ms
   var mainloop = function() {
     cwvm.recharge();
+    cwvm.autoMine();
   };
   setInterval( mainloop, framerate );
 

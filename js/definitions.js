@@ -2,17 +2,20 @@ var Resources = {
   Crystal: {
     name: "Crystal",
     description: "A transparent stone",
-    increment: 8
+    increment: 8,
+    critical: 0
   },
   Xenon: {
     name: "Xenon",
     description: "A noble gas",
-    increment: 3
+    increment: 3,
+    critical: 0
   },
   Twinkies: {
     name: "Twinkies",
     description: "A spongy treat",
-    increment: 1
+    increment: 1,
+    critical: 1
   }
 };
 
@@ -24,7 +27,7 @@ var Units = {
       'Crystal': 60
     },
     rechargeCost: {
-      'Twinkies': 1
+      'Twinkies': 0.125
     }
   },
   Marines: {
@@ -35,7 +38,7 @@ var Units = {
       'Xenon': 25
     },
     rechargeCost: {
-      'Twinkies': 1
+      'Twinkies': 0.25
     }
   },
   'T-1000s': {
@@ -45,7 +48,7 @@ var Units = {
       'Crystal': 500
     },
     rechargeCost: {
-      'Twinkies': 2
+      'Twinkies': 0.25
     }
   },
   Tanks: {
@@ -55,7 +58,7 @@ var Units = {
       'Crystal': 500
     },
     rechargeCost: {
-      'Twinkies': 3
+      'Twinkies': 1.25
     }
   },
   'Matt Millers': {
@@ -66,7 +69,7 @@ var Units = {
       'Xenon': 300
     },
     rechargeCost: {
-      'Twinkies': 5
+      'Twinkies': 2
     }
   }
 };
