@@ -6,6 +6,7 @@
         <script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-3.0.0.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js"></script>
         <script src="js/main.js"></script>
     </head>
 
@@ -28,28 +29,28 @@
 
                     <div id="resources" data-bind="foreach: resources">
                         <div id="" class="resource-button">
-                            <button type="button" class="btn btn-sm btn-default" data-bind="click: $parent.mineResource">Mine <span data-bind="text: name"></span></button>
-                            <span class="resource-count pull-right badge alert-default" data-bind="text: value"></span>
+                            <button type="button" class="btn btn-sm btn-default" data-bind="click: function(){$parent.mine(this);}">Mine <span data-bind="text: name"></span></button>
+                            <span class="resource-count pull-right badge alert-default" data-bind="text: $root.player[name]"></span>
                         </div>
                     </div>
 
                 </div>
 
                 <div class="col-md-7 col-md-offset-2">
-                    <h3>Allocation</h3>
+                    <h3>Units</h3>
 
-                    <!-- ko foreach: allocations -->
+                    <!-- ko foreach: units -->
                     <div class="allocation-row">
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,-1000);}">-1k</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,-100);}">-100</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,-10);}">-10</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,-1);}">&nbsp;<&nbsp;</button>
-                        <span class="allocation-item"><strong data-bind="text: name" style="text-align: left;"></strong><span class="allocation-item-count pull-right badge" data-bind="text: value"></span></span>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,1);}">&nbsp;>&nbsp;</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,10);}">+10</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,100);}">+100</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,1000);}">+1k</button>
-                        <span class="label label-danger" data-bind="text: resourceAlertMsg"></span>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(this,-1000);}">-1k</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(this,-100);}">-100</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(this,-10);}">-10</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(this,-1);}">&nbsp;&lt;&nbsp;</button>
+                        <span class="allocation-item"><strong data-bind="text: name" style="text-align: left;"></strong><span class="allocation-item-count pull-right badge" data-bind="text: player[name]"></span></span>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(this,1);}">&nbsp;&gt;&nbsp;</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(this,10);}">+10</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(this,100);}">+100</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(this,1000);}">+1k</button>
+                        <span class="label label-danger" data-bind="text: alertMessage"></span>
                     </div>
                     <!-- /ko -->
 

@@ -4,74 +4,103 @@
  * A game of clicks.
  *
  * @author Bryan Potts <pottspotts@gmail.com>
+ * @author Matt Montag <matt.montag@gmail.com>
  *
  */
 
-$(document).ready(function(){
+// It might be nice to just set up the game parameters declaratively:
+//
+// var Resources = {
+//   Crystal: {
+//     name: "Crystal",
+//     increment: 8
+//   },
+//   Xenon: {
+//     name: "Xenon",
+//     increment: 3
+//   }
+// };`
+// 
+// But for now we do it procedurally...
 
-  /*
-   * View Model
-   */
-  function ClickWarsViewModel() {
-    var self = this;
+function Resource(name, increment, description){
+  this.name = name;
+  this.increment = increment;
+  this.description = description;
+}
 
-    function Resource(name,initVal,mineIncrement){
-      this.name = name;
-      this.value = ko.observable(initVal);
-      this.mineIncrement = mineIncrement;
-    }
+function Unit(name, resourceCost, description) {
+  this.name = name;
+  this.resourceCost = resourceCost || {};
+  this.description = description;
+}
 
-    function Allocation(name,initVal,reqResources) {
-      this.name = name;
-      this.value = ko.observable(initVal);
-      this.reqResources = reqResources;
+function ClickWarsViewModel() {
+  // Setup game parameters
+  this.resources = ko.observableArray([
+    new Resource('Crystal', 8, 'A transparent stone'),
+    new Resource('Xenon', 3, 'A noble gas'),
+    new Resource('Twinkies', 1, 'A spongy snack')
+  ]);
+  this.units = ko.observableArray([
+    new Unit('Miner', { 'Crystal': 60 }, 'Basic unit'),
+    new Unit('Marines', { 'Crystal': 30, 'Xenon': 25 }, 'Basic unit'),
+    new Unit('T-1000s', {}, 'Basic unit'),
+    new Unit('Tanks', {}, 'Basic unit'),
+    new Unit('Matt Millers', { 'Twinkies': 10 }, 'Basic unit')
+  ]);
 
-      this.resourceAlertMsg = ko.observable('');
-    }
+  // Initialize player
+  this.player = window.player;
+  _.each(this.resources(), function(resource) {
+    this.player[resource.name] = ko.observable(0);
+  });
+  _.each(this.units(), function(unit) {
+    this.player[unit.name] = ko.observable(0);
+    // alertMessage should probably not exist on the unit object, unless we call it a unit view model.
+    unit.alertMessage = ko.observable('');
+  });
+}
 
-    Allocation.prototype.checkResources = function(Allocation){
-      $.each(this.reqResources, function(resourceName,cost){
-        console.log(resourceName);
-        balance = window[resourceName].value(); // reference object via name str
-        if(balance >= cost){
-          window[resourceName].value(balance - cost);
-        } else {
-          self.resourceAlert(Allocation,resourceName);
-        }
-      });
-    };
+$.extend(ClickWarsViewModel.prototype, {
+  mine: function(resource) {
+    addObservable(this.player[resource.name], resource.increment);
+  },
 
-    // Resources
-    self.resources = ko.observableArray([
-      Crystal = new Resource('Crystal',0,8),
-      Xenon = new Resource('Xenon',0,3),
-      Recruits = new Resource('Recruits',0,1)
-    ]);
-    self.mineResource = function(){
-      this.value(this.value() + this.mineIncrement);
-    };
-    self.resourceAlertMsg = ko.observable('');
-    self.resourceAlert = function(Allocation,resourceName){
-      Allocation.resourceAlertMsg('$');
-    };
-
-    // Allocations
-    self.allocations = ko.observableArray([
-      new Allocation('Miner',0,{'Crystal':200}),
-      new Allocation('Marines',0,{'Crystal':120,'Xenon':25}),
-      new Allocation('T-1000s',0,{}),
-      new Allocation('Tanks',0,{}),
-      new Allocation('Matt Millers',0,{})
-    ]);
-
-    self.allocate = function(me,diff){
-      //console.log(me); debugger;
-      if(me.checkResources(me,diff)){
-        me.value(me.value()+diff);
+  buy: function(unit, quantity) { // negative quantity means sell
+      if (this.player[unit.name]() + quantity < 0) {
+        unit.alertMessage('RRNT');
+        setTimeout(function() { unit.alertMessage(''); }, 100);
+        return;
       }
+      for (var resourceName in unit.resourceCost) {
+      // first pass to verify funds, so we don't have to undo any transactions.
+      // we can solve this with some nice functional methods later: http://goo.gl/J3ULxI
+      var cost = unit.resourceCost[resourceName];
+      var totalCost = quantity * cost;
+      if (this.player[resourceName]() < totalCost) {
+        unit.alertMessage('$');
+        setTimeout(function() { unit.alertMessage(''); }, 100);
+        return;
+      }
+
     }
+    _.each(unit.resourceCost, function(cost, resourceName) {
+      var totalCost = quantity * cost;
+      addObservable(this.player[resourceName], 0-totalCost);
+      addObservable(this.player[unit.name], quantity);
+    });
   }
+});
 
-  ko.applyBindings(new ClickWarsViewModel());
+function addObservable(observable, addend) {
+  observable(observable() + addend);
+}
 
+// Global objects exposed for debugging
+window.player = {};
+window.cwvm = new ClickWarsViewModel();
+
+$(document).ready(function() {
+  ko.applyBindings(cwvm);
 });
