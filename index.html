@@ -63,7 +63,7 @@
             <div class="row">
 
                 <!-- Resources -->
-                <div class="col-md-4">
+                <div class="col-md-5">
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
@@ -83,6 +83,7 @@
                                 <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(this,10);}">+10</button>
                                 <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(this,100);}">+100</button>
                                 <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(this,100);}">+1k</button>
+                                <span class="resource-count pull-right badge alert-default" data-bind="text: $root.player[name]"></span>
                                 <span class="label label-danger" data-bind="text: alertMessage"></span>
                             </div>
                             <!-- /ko -->

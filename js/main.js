@@ -92,6 +92,19 @@ $.extend(ClickWarsViewModel.prototype, {
       addObservable(this.player[resourceName], 0-totalCost);
       addObservable(this.player[building.name], quantity);
     });
+  },
+
+  recharge: function() { // subtract resources to pay for units living expenses
+    _.each(this.units(), function(unit){
+      _.each(unit.rechargeCost, function(cost, resourceName){
+        var unitCount = this.player[unit.name]();
+        if(unitCount > 0){
+          var totalCost = cost * unitCount;
+          addObservable(this.player[resourceName], 0-totalCost);
+          console.log(unit.name+' recharged for '+cost+' '+resourceName+'s');
+        }
+      })
+    })
   }
 });
 
@@ -105,4 +118,11 @@ window.cwvm = new ClickWarsViewModel();
 
 $(document).ready(function() {
   ko.applyBindings(cwvm);
+
+  var framerate = 1000; //ms
+  var mainloop = function() {
+    cwvm.recharge();
+  };
+  setInterval( mainloop, framerate );
+
 });

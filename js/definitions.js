@@ -18,10 +18,13 @@ var Resources = {
 
 var Units = {
   Miners: {
-    name: "Miner",
+    name: "Miners",
     description: "Simple human laborer",
     resourceCost: {
       'Crystal': 60
+    },
+    rechargeCost: {
+      'Twinkies': 1
     }
   },
   Marines: {
@@ -30,6 +33,9 @@ var Units = {
     resourceCost: {
       'Crystal': 30,
       'Xenon': 25
+    },
+    rechargeCost: {
+      'Twinkies': 1
     }
   },
   'T-1000s': {
@@ -37,6 +43,9 @@ var Units = {
     description: "Urgent advancement to chopper requested.",
     resourceCost: {
       'Crystal': 500
+    },
+    rechargeCost: {
+      'Twinkies': 2
     }
   },
   Tanks: {
@@ -44,6 +53,9 @@ var Units = {
     description: "Area damage, slow.",
     resourceCost: {
       'Crystal': 500
+    },
+    rechargeCost: {
+      'Twinkies': 3
     }
   },
   'Matt Millers': {
@@ -52,6 +64,9 @@ var Units = {
     resourceCost: {
       'Crystal': 900,
       'Xenon': 300
+    },
+    rechargeCost: {
+      'Twinkies': 5
     }
   }
 };
