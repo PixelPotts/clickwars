@@ -8,21 +8,6 @@
  *
  */
 
-// It might be nice to just set up the game parameters declaratively:
-//
-// var Resources = {
-//   Crystal: {
-//     name: "Crystal",
-//     increment: 8
-//   },
-//   Xenon: {
-//     name: "Xenon",
-//     increment: 3
-//   }
-// };`
-// 
-// But for now we do it procedurally...
-
 function Resource(name, increment, description){
   this.name = name;
   this.increment = increment;
@@ -37,11 +22,7 @@ function Unit(name, resourceCost, description) {
 
 function ClickWarsViewModel() {
   // Setup game parameters
-  this.resources = ko.observableArray([
-    new Resource('Crystal', 8, 'A transparent stone'),
-    new Resource('Xenon', 3, 'A noble gas'),
-    new Resource('Twinkies', 1, 'A spongy snack')
-  ]);
+  this.resources = ko.observableArray(_.toArray(Resources));
   this.units = ko.observableArray([
     new Unit('Miner', { 'Crystal': 60 }, 'Basic unit'),
     new Unit('Marines', { 'Crystal': 30, 'Xenon': 25 }, 'Basic unit'),
