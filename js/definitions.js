@@ -55,3 +55,37 @@ var Units = {
     }
   }
 };
+
+var Buildings = {
+  'Supply Depot': {
+    name: "Supply Depot",
+    description: "Supports <strong class='badge'>+10</strong> units",
+    size: 3, // square meters
+    resourceCost: {
+      'Crystal': 80
+    },
+    visibility: 1
+  },
+  'Barracks': {
+    name: "Barracks",
+    description: "Supports <strong class='badge'>+10</strong> units",
+    size: 3, // square meters
+    resourceCost: {
+      'Crystal': 80
+    },
+    visibility: 1
+  },
+  'Research Facility': {
+    name: "Research Facility",
+    description: "Supports <strong class='badge'>+10</strong> units",
+    size: 3, // square meters
+    resourceCost: {
+      'Crystal': 1200
+    },
+    visibility: 0,
+    researchPreReqs: [
+      'Math', 'Science'
+    ]
+  }
+
+};

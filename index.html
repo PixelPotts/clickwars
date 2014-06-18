@@ -18,7 +18,7 @@
 
             <span class="resource-alert-message">Status: <span class="label label-success">Normal</span></span>
 
-            <h1>Click City 2000</h1>
+            <h1>War Clickers 2000</h1>
 
             <!-- Header -->
             <div class="row">
@@ -57,8 +57,44 @@
 
                 </div>
 
-            </div>
+            </div> <!-- /row -->
 
+            <br />
+            <div class="row">
+
+                <!-- Resources -->
+                <div class="col-md-4">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#home" data-toggle="tab">Development</a></li>
+                        <li><a href="#profile" data-toggle="tab">Research</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+
+                        <!-- Development -->
+                        <div class="tab-pane active" id="home">
+
+                            <!-- ko foreach: buildings -->
+                            <div id="" class="resource-button">
+                                <button type="button" class="btn btn-xs btn-default build-btn-title" data-bind="click: function(){$parent.build(this);}"><span data-bind="text: name"></span></button>
+                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.buy(this,10);}">+10</button>
+                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.buy(this,100);}">+100</button>
+                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.buy(this,100);}">+100</button>
+                            </div>
+                            <!-- /ko -->
+
+                        </div>
+
+                        <!-- Research -->
+                        <div class="tab-pane" id="profile">...</div>
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 

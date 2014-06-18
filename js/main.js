@@ -14,22 +14,17 @@ function Resource(name, increment, description){
   this.description = description;
 }
 
-function Unit(name, resourceCost, description) {
+function Unit(name, description, resourceCost) {
   this.name = name;
-  this.resourceCost = resourceCost || {};
   this.description = description;
+  this.resourceCost = resourceCost || {};
 }
 
 function ClickWarsViewModel() {
   // Setup game parameters
   this.resources = ko.observableArray(_.toArray(Resources));
-  this.units = ko.observableArray([
-    new Unit('Miner', { 'Crystal': 60 }, 'Basic unit'),
-    new Unit('Marines', { 'Crystal': 30, 'Xenon': 25 }, 'Basic unit'),
-    new Unit('T-1000s', {}, 'Basic unit'),
-    new Unit('Tanks', {}, 'Basic unit'),
-    new Unit('Matt Millers', { 'Twinkies': 10 }, 'Basic unit')
-  ]);
+  this.units = ko.observableArray(_.toArray(Units));
+  this.buildings = ko.observableArray(_.toArray(Buildings));
 
   // Initialize player
   this.player = window.player;

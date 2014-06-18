@@ -23,3 +23,9 @@
     right: 20px;
     text-align: right;
 }
+.build-btn-title {
+    min-width: 200px;
+}
+.build-multiplier-btn:nth-child(2) {
+    margin-left: 10px;
+}
