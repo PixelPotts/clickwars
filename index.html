@@ -14,64 +14,44 @@
 
         <div class="container">
 
-            <h1>ClickWars</h1>
+            <span class="resource-alert-message">Status: <span class="label label-success">Normal</span></span>
+
+            <h1>Click City 2000</h1>
 
             <!-- Header -->
             <div class="row">
 
                 <!-- Resources -->
-                <div class="col-md-4">
+                <div class="col-md-3">
 
                     <h3>Resources</h3>
 
-                    <div id="resources">
-                        <div class="resource-button">
-                            <button type="button" class="btn btn-sm btn-default" data-bind="click: mineMinerals">Mine Crystal</button>
-                            <span class="resource-count pull-right">0</span>
+                    <div id="resources" data-bind="foreach: resources">
+                        <div id="" class="resource-button">
+                            <button type="button" class="btn btn-sm btn-default" data-bind="click: $parent.mineResource">Mine <span data-bind="text: name"></span></button>
+                            <span class="resource-count pull-right badge alert-default" data-bind="text: value"></span>
                         </div>
-                        <div class="resource-button">
-                            <button type="button" class="btn btn-sm btn-default">Frack Xenon</button>
-                            <span class="resource-count pull-right">0</span>
-                        </div>
-                        <div class="resource-button">
-                            <button type="button" class="btn btn-sm btn-default">Hire Recruits</button>
-                            <span class="resource-count pull-right">0</span>
-                        </div>
-
                     </div>
 
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-7 col-md-offset-2">
                     <h3>Allocation</h3>
 
+                    <!-- ko foreach: allocations -->
                     <div class="allocation-row">
-                        <button type="button" class="btn btn-default btn-xs">-100</button>
-                        <button type="button" class="btn btn-default btn-xs">-10</button>
-                        <button type="button" class="btn btn-default btn-xs">&nbsp;<&nbsp;</button>
-                        <span class="allocation-item">Marines<span class="allocation-item-count pull-right badge">100</span></span>
-                        <button type="button" class="btn btn-default btn-xs">&nbsp;>&nbsp;</button>
-                        <button type="button" class="btn btn-default btn-xs">+10</button>
-                        <button type="button" class="btn btn-default btn-xs">+100</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,-1000);}">-1k</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,-100);}">-100</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,-10);}">-10</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,-1);}">&nbsp;<&nbsp;</button>
+                        <span class="allocation-item"><strong data-bind="text: name" style="text-align: left;"></strong><span class="allocation-item-count pull-right badge" data-bind="text: value"></span></span>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,1);}">&nbsp;>&nbsp;</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,10);}">+10</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,100);}">+100</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.allocate(this,1000);}">+1k</button>
+                        <span class="label label-danger" data-bind="text: resourceAlertMsg"></span>
                     </div>
-                    <div class="allocation-row">
-                        <button type="button" class="btn btn-default btn-xs">-100</button>
-                        <button type="button" class="btn btn-default btn-xs">-10</button>
-                        <button type="button" class="btn btn-default btn-xs">&nbsp;<&nbsp;</button>
-                        <span class="allocation-item">Marines<span class="allocation-item-count pull-right badge">100</span></span>
-                        <button type="button" class="btn btn-default btn-xs">&nbsp;>&nbsp;</button>
-                        <button type="button" class="btn btn-default btn-xs">+10</button>
-                        <button type="button" class="btn btn-default btn-xs">+100</button>
-                    </div>
-                    <div class="allocation-row">
-                        <button type="button" class="btn btn-default btn-xs">-100</button>
-                        <button type="button" class="btn btn-default btn-xs">-10</button>
-                        <button type="button" class="btn btn-default btn-xs">&nbsp;<&nbsp;</button>
-                        <span class="allocation-item">Marines<span class="allocation-item-count pull-right badge">100</span></span>
-                        <button type="button" class="btn btn-default btn-xs">&nbsp;>&nbsp;</button>
-                        <button type="button" class="btn btn-default btn-xs">+10</button>
-                        <button type="button" class="btn btn-default btn-xs">+100</button>
-                    </div>
+                    <!-- /ko -->
 
                 </div>
 
