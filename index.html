@@ -29,7 +29,7 @@
                     <h3>Resources</h3>
 
                     <div id="resources" data-bind="foreach: resources">
-                        <div id="" class="resource-button">
+                        <div class="resource-button">
                             <button type="button" class="btn btn-sm btn-default" data-bind="click: function(){$parent.mine(this);}">Mine <span data-bind="text: name"></span></button>
                             <span class="resource-count pull-right badge alert-default" data-bind="text: $root.player[name]"></span>
                         </div>
@@ -78,11 +78,12 @@
                         <div class="tab-pane active" id="home">
 
                             <!-- ko foreach: buildings -->
-                            <div id="" class="resource-button">
-                                <button type="button" class="btn btn-xs btn-default build-btn-title" data-bind="click: function(){$parent.build(this);}"><span data-bind="text: name"></span></button>
-                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.buy(this,10);}">+10</button>
-                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.buy(this,100);}">+100</button>
-                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.buy(this,100);}">+100</button>
+                            <div class="resource-button">
+                                <button type="button" class="btn btn-xs btn-default build-btn-title" data-bind="click: function(){$parent.build(this,1);}"><span data-bind="text: name"></span></button>
+                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(this,10);}">+10</button>
+                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(this,100);}">+100</button>
+                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(this,100);}">+1k</button>
+                                <span class="label label-danger" data-bind="text: alertMessage"></span>
                             </div>
                             <!-- /ko -->
 

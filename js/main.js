@@ -36,6 +36,12 @@ function ClickWarsViewModel() {
     // alertMessage should probably not exist on the unit object, unless we call it a unit view model.
     unit.alertMessage = ko.observable('');
   });
+  _.each(this.buildings(), function(building) {
+    this.player[building.name] = ko.observable(0);
+    // alertMessage should probably not exist on the unit object, unless we call it a unit view model.
+    building.alertMessage = ko.observable('');
+  });
+
 }
 
 $.extend(ClickWarsViewModel.prototype, {
@@ -65,6 +71,26 @@ $.extend(ClickWarsViewModel.prototype, {
       var totalCost = quantity * cost;
       addObservable(this.player[resourceName], 0-totalCost);
       addObservable(this.player[unit.name], quantity);
+    });
+  },
+
+  build: function(building, quantity) { // negative quantity means sell
+      for (var resourceName in building.resourceCost) {
+      // first pass to verify funds, so we don't have to undo any transactions.
+      // we can solve this with some nice functional methods later: http://goo.gl/J3ULxI
+      var cost = building.resourceCost[resourceName];
+      var totalCost = quantity * cost;
+      if (this.player[resourceName]() < totalCost) {
+        building.alertMessage('$');
+        setTimeout(function() { building.alertMessage(''); }, 100);
+        return;
+      }
+
+    }
+    _.each(building.resourceCost, function(cost, resourceName) {
+      var totalCost = quantity * cost;
+      addObservable(this.player[resourceName], 0-totalCost);
+      addObservable(this.player[building.name], quantity);
     });
   }
 });
