@@ -1,17 +1,17 @@
 var Resources = {
-  Crystal: {
+  crystal: {
     name: "Crystal",
     description: "A transparent stone",
     increment: 8,
     critical: 0
   },
-  Xenon: {
+  xenon: {
     name: "Xenon",
     description: "A noble gas",
     increment: 3,
     critical: 0
   },
-  Twinkies: {
+  twinkies: {
     name: "Twinkies",
     description: "A spongy treat",
     increment: 1,
@@ -20,103 +20,103 @@ var Resources = {
 };
 
 var Units = {
-  Miners: {
+  miners: {
     name: "Miners",
     description: "Simple human laborer",
     resourceCost: {
-      'Crystal': 60
+      crystal: 60
     },
     rechargeCost: {
-      'Twinkies': 1
+      twinkies: 1
     },
-    minesFor: 'Crystal',
-    autoMineIncrement: 1
+    minesFor: "crystal",
+    mineIncrement: 1
   },
-  'Twinkie Hunters': {
+  twinkieHunters: {
     name: "Twinkie Hunters",
     description: "Search & Destroy",
     resourceCost: {
-      'Crystal': 250
+      crystal: 250
     },
     rechargeCost: {
-      'Twinkies': 1
+      twinkies: 1
     },
-    minesFor: 'Twinkies',
-    autoMineIncrement: 2
+    minesFor: "twinkies",
+    mineIncrement: 2
   },
-  Marines: {
+  marines: {
     name: "Marines",
     description: "The first to die, with distinction",
     resourceCost: {
-      'Crystal': 30,
-      'Xenon': 25
+      crystal: 30,
+      xenon: 25
     },
     rechargeCost: {
-      'Twinkies': 1
+      twinkies: 1
     }
   },
-  'T-1000s': {
+  t1000s: {
     name: "T-1000s",
     description: "Urgent advancement to chopper requested.",
     resourceCost: {
-      'Crystal': 500
+      crystal: 500
     },
     rechargeCost: {
-      'Twinkies': 1
+      twinkies: 1
     }
   },
-  Tanks: {
+  tanks: {
     name: "Tanks",
     description: "Area damage, slow.",
     resourceCost: {
-      'Crystal': 500
+      crystal: 500
     },
     rechargeCost: {
-      'Twinkies': 1.25
+      twinkies: 1.25
     }
   },
-  'Matt Millers': {
+  millers: {
     name: "Matt Millers",
     description: "A.I. Researcher.",
     resourceCost: {
-      'Crystal': 900,
-      'Xenon': 300
+      crystal: 900,
+      xenon: 300
     },
     rechargeCost: {
-      'Twinkies': 2
+      twinkies: 2
     }
   }
 };
 
 var Buildings = {
-  'Supply Depot': {
+  depots: {
     name: "Supply Depot",
     description: "Supports <strong class='badge'>+10</strong> units",
     size: 3, // square meters
     resourceCost: {
-      'Crystal': 80
+      crystal: 80
     },
     visibility: 1
   },
-  'Barracks': {
+  barracks: {
     name: "Barracks",
     description: "Supports <strong class='badge'>+10</strong> units",
     size: 3, // square meters
     resourceCost: {
-      'Crystal': 80
+      crystal: 80
     },
     visibility: 1
   },
-  'Research Facility': {
+  researchFacility: {
     name: "Research Facility",
     description: "Supports <strong class='badge'>+10</strong> units",
     size: 3, // square meters
     resourceCost: {
-      'Crystal': 1200
+      crystal: 1200
     },
     visibility: 0,
     researchPreReqs: [
-      'Math', 'Science'
+      'math', 'science'
     ]
   }
 
