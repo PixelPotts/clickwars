@@ -27,8 +27,22 @@ var Units = {
       'Crystal': 60
     },
     rechargeCost: {
-      'Twinkies': 0.125
-    }
+      'Twinkies': 1
+    },
+    minesFor: 'Crystal',
+    autoMineIncrement: 1
+  },
+  'Twinkie Hunters': {
+    name: "Twinkie Hunters",
+    description: "Search & Destroy",
+    resourceCost: {
+      'Crystal': 250
+    },
+    rechargeCost: {
+      'Twinkies': 1
+    },
+    minesFor: 'Twinkies',
+    autoMineIncrement: 2
   },
   Marines: {
     name: "Marines",
@@ -38,7 +52,7 @@ var Units = {
       'Xenon': 25
     },
     rechargeCost: {
-      'Twinkies': 0.25
+      'Twinkies': 1
     }
   },
   'T-1000s': {
@@ -48,7 +62,7 @@ var Units = {
       'Crystal': 500
     },
     rechargeCost: {
-      'Twinkies': 0.25
+      'Twinkies': 1
     }
   },
   Tanks: {

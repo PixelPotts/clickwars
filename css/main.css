@@ -17,10 +17,10 @@
 .allocation-item-count {
     margin-right: 10px;
 }
-.resource-alert-message {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+#game-status-wrap {
+    position: relative;
+    top: 52px;
+    left: 404px;
     text-align: right;
 }
 .build-btn-title {

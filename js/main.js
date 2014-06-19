@@ -111,7 +111,11 @@ $.extend(ClickWarsViewModel.prototype, {
   },
 
   autoMine: function() {
-
+    _.each(this.units(),function(unit){
+      if(_.has(unit,'minesFor')){
+        addObservable(this.player[unit.minesFor], unit.autoMineIncrement * this.player[unit.name]());
+      }
+    });
   }
 });
 

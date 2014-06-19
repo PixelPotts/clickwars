@@ -16,7 +16,7 @@
 
         <div class="container">
 
-            <label class="resource-alert-message">Status: <span class="" data-bind="attr: {'class':gameStatusBadge}, text: gameStatusMsg"></span></label>
+            <label id="game-status-wrap">Status: <span id="game-status-msg" data-bind="attr: {'class':gameStatusBadge}, text: gameStatusMsg"></span></label>
 
             <h1>War Clickers 2000</h1>
 
@@ -39,6 +39,9 @@
 
                 <div class="col-md-7 col-md-offset-2">
                     <h3>Units</h3>
+
+                    <span>Population: 1</span>
+                    <span>Supply: 10</span>
 
                     <!-- ko foreach: units -->
                     <div class="allocation-row">
