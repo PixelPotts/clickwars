@@ -10,39 +10,38 @@
 
 function ClickWarsViewModel() {
   // Setup game parameters
-  var self = this;
   this.resources = ko.observableArray(_.toArray(Resources));
   this.units = ko.observableArray(_.toArray(Units));
   this.buildings = ko.observableArray(_.toArray(Buildings));
 
   // Initialize player
   this.player = window.player;
-  _.each(self.resources(), function(resource) {
-    self.player[resource.name] = ko.observable(0);
+  _.each(this.resources, function(_, key) {
+    this.player[resource.name] = ko.observable(0);
   });
-  _.each(self.units(), function(unit) {
-    self.player[unit.name] = ko.observable(0);
+  _.each(this.units(), function(unit) {
+    this.player[unit.name] = ko.observable(0);
     // alertMessage should probably not exist on the unit object, unless we call it a unit view model.
     unit.alertMessage = ko.observable('');
   });
-  _.each(self.buildings(), function(building) {
-    self.player[building.name] = ko.observable(0);
+  _.each(this.buildings(), function(building) {
+    this.player[building.name] = ko.observable(0);
     // alertMessage should probably not exist on the unit object, unless we call it a unit view model.
     building.alertMessage = ko.observable('');
   });
 
   // Game status - check critical resources' balance
-  self.criticalFlag = 0;
-  self.gameStatusMsg = ko.observable('Normal');
-  self.gameStatusBadge = ko.computed(function(){
-    self.criticalFlag = 0; // reset
-    _.each(self.resources(), function(resource){
-      if(resource.critical && self.player[resource.name]() < 0){
-        self.criticalFlag = 1;
+  this.criticalFlag = 0;
+  this.gameStatusMsg = ko.observable('Normal');
+  this.gameStatusBadge = ko.computed(function(){
+    this.criticalFlag = 0; // reset
+    _.each(this.resources(), function(resource){
+      if(resource.critical && this.player[resource.name]() < 0){
+        this.criticalFlag = 1;
       }
     });
-    self.gameStatusMsg(self.criticalFlag ? 'Critical' : 'Normal');
-    return self.criticalFlag == 1 ? "label alert-danger" : "label alert-success";
+    this.gameStatusMsg(this.criticalFlag ? 'Critical' : 'Normal');
+    return this.criticalFlag == 1 ? "label alert-danger" : "label alert-success";
   },this);
 }
 
