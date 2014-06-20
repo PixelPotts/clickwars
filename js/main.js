@@ -11,22 +11,26 @@
 function ClickWarsViewModel() {
   // Setup game parameters
   var self = this;
-  this.resources = ko.observableDictionary(Resources);
-  this.units = ko.observableDictionary(Units);
-  this.buildings = ko.observableDictionary(Buildings);
+  this.resources = _.toArray(Resources);
+  this.units = _.toArray(Units);
+  this.buildings = _.toArray(Buildings);
 
   // Initialize player
-  this.player = window.player;
+  window.player = this.player = {
+      resources: [],
+      units: [],
+      buildings: []
+  };
   _.each(this.resources, function(resource, key) {
-    self.player[key] = ko.observable(0);
+    self.player.resources[key] = ko.observable(1000);
   });
   _.each(this.units, function(unit, key) {
-    self.player[key] = ko.observable(0);
+    self.player.units[key] = ko.observable(0);
     // alertMessage should probably not exist on the unit object, unless we call it a unit view model.
     unit.alertMessage = ko.observable('');
   });
   _.each(this.buildings, function(building, key) {
-    self.player[key] = ko.observable(0);
+    self.player.buildings[key] = ko.observable(0);
     building.alertMessage = ko.observable('');
   });
 
@@ -36,86 +40,78 @@ function ClickWarsViewModel() {
   this.gameStatusBadge = ko.computed(function(){
     self.criticalFlag = 0; // reset
     _.each(self.resources, function(resource, key){
-      if(resource.critical && self.player[key]() < 0){
+      if(resource.critical && self.player.resources[key]() < 0){
         self.criticalFlag = 1;
       }
     });
     self.gameStatusMsg(self.criticalFlag ? 'Critical' : 'Normal');
     return self.criticalFlag == 1 ? "label alert-danger" : "label alert-success";
-  },this);
+  }, this);
 }
 
 $.extend(ClickWarsViewModel.prototype, {
 
   mine: function(resourceKey) {
     var resource = this.resources[resourceKey];
-    addObservable(this.player[resourceKey], resource().increment);
+    addObservable(this.player.resources[resourceKey], resource.increment);
   },
 
-  buy: function(unitKey, quantity) { // negative quantity means sell
-    var unit = this.units[unitKey];
-    if (this.player[unitKey]() + quantity < 0) {
-      unit.alertMessage('RRNT');
-      setTimeout(function() { unit.alertMessage(''); }, 100);
+  buy: function(type, key, quantity) { // negative quantity means sell
+    var entity = this[type][key];
+    if (this.player[type][key]() + quantity < 0) {
+      entity.alertMessage('RRNT');
+      setTimeout(function() { entity.alertMessage(''); }, 100);
       return;
     }
-    for (var resourceKey in unit.resourceCost) {
+    for (var resourceName in entity.cost) {
       // first pass to verify funds, so we don't have to undo any transactions.
       // we can solve this with some nice functional methods later: http://goo.gl/J3ULxI
-      var cost = unit.resourceCost[resourceKey];
+      var cost = entity.cost[resourceName];
+      var resourceKey = this.resourceKeyByName(resourceName);
       var totalCost = quantity * cost;
-      if (this.player[resourceKey]() < totalCost) {
-        unit.alertMessage('$');
-        setTimeout(function() { unit.alertMessage(''); }, 100);
+      if (this.player.resources[resourceKey]() < totalCost) {
+        entity.alertMessage('$');
+        setTimeout(function() { entity.alertMessage(''); }, 100);
         return;
       }
     }
-    _.each(unit.resourceCost, function(cost, resourceKey) {
+    _.each(entity.cost, function(cost, resourceName) {
+      var resourceKey = this.resourceKeyByName(resourceName);
       var totalCost = quantity * cost;
-      addObservable(this.player[resourceKey], 0-totalCost);
-      addObservable(this.player[unitKey], quantity);
-    });
+      addObservable(this.player.resources[resourceKey], 0 - totalCost);
+      addObservable(this.player[type][key], quantity);
+    }, this);
   },
 
-  build: function(buildingKey, quantity) { // negative quantity means sell
-    var building = this.buildings[buildingKey];
-    for (var resourceKey in building.resourceCost) {
-      // first pass to verify funds, so we don't have to undo any transactions.
-      // we can solve this with some nice functional methods later: http://goo.gl/J3ULxI
-      var cost = building.resourceCost[resourceKey];
-      var totalCost = quantity * cost;
-      if (this.player[resourceKey]() < totalCost) {
-        building.alertMessage('$');
-        setTimeout(function() { building.alertMessage(''); }, 100);
-        return;
-      }
-    }
-    _.each(building.resourceCost, function(cost, resourceKey) {
-      var totalCost = quantity * cost;
-      addObservable(this.player[resourceKey], 0-totalCost);
-      addObservable(this.player[buildingKey], quantity);
-    });
+  build: function(buildingKey, quantity) {
+    return this.buy('buildings', buildingKey, quantity);
   },
 
-  recharge: function () { // subtract resources to pay for units' living expenses
+  train: function(unitKey, quantity) {
+    return this.buy('units', unitKey, quantity);
+  },
+
+  produceAndConsume: function () {
+    var self = this;
     _.each(this.units, function (unit, unitKey) {
-      var unitCount = this.player[unitKey]();
+      var unitCount = self.player.units[unitKey]();
       if (unitCount > 0) {
-        _.each(unit.rechargeCost, function (cost, resourceKey) {
-          var totalCost = cost * unitCount;
-          addObservable(this.player[resourceKey], 0 - totalCost);
-          console.log(unitKey + ' recharged for ' + totalCost + ' ' + resourceKey + 's');
-        })
+        _.each(unit.produces, function (amount, resourceName) {
+          var resourceKey = self.resourceKeyByName(resourceName);
+          var totalAmount = amount * unitCount;
+          addObservable(self.player.resources[resourceKey], totalAmount);
+        });
+        _.each(unit.consumes, function (amount, resourceName) {
+          var resourceKey = self.resourceKeyByName(resourceName);
+          var totalAmount = amount * unitCount;
+          addObservable(self.player.resources[resourceKey], 0 - totalAmount);
+        });
       }
     });
   },
 
-  autoMine: function() {
-    _.map(this.units, function(unit, unitKey) {
-      if (unit.minesFor) {
-        addObservable(this.player[unit.minesFor], unit.mineIncrement * this.player[unitKey]());
-      }
-    });
+  resourceKeyByName: function(name) {
+    return this.resources.indexOf(Resources[name]);
   }
 });
 
@@ -124,17 +120,15 @@ function addObservable(observable, addend) {
 }
 
 // Global objects exposed for debugging
-window.player = {};
-window.cwvm = new ClickWarsViewModel();
+var player;
+var cwvm = new ClickWarsViewModel();
 
 $(document).ready(function() {
   ko.applyBindings(cwvm);
 
   var framerate = 1000; //ms
   var mainloop = function() {
-    cwvm.recharge();
-    cwvm.autoMine();
+    cwvm.produceAndConsume();
   };
-  setInterval( mainloop, framerate );
-
+  setInterval(mainloop, framerate);
 });

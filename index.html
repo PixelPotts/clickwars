@@ -7,7 +7,6 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js"></script>
-        <script src="js/ko.observableDictionary.js"></script>
         <script src="js/definitions.js"></script>
         <script src="js/main.js"></script>
     </head>
@@ -29,10 +28,10 @@
 
                     <h3>Resources</h3>
 
-                    <div id="resources" data-bind="foreach: resources.items">
+                    <div id="resources" data-bind="foreach: resources">
                         <div class="resource-button">
-                            <button type="button" class="btn btn-sm btn-default" data-bind="click: function(){$parent.mine(key());}">Mine <span data-bind="text: value().name"></span></button>
-                            <span class="resource-count pull-right badge" data-bind="text: $root.player[key()]"></span>
+                            <button type="button" class="btn btn-sm btn-default" data-bind="click: function(){$parent.mine($index());}">Mine <span data-bind="text: name"></span></button>
+                            <span class="resource-count pull-right badge" data-bind="text: $root.player.resources[$index()]"></span>
                         </div>
                     </div>
 
@@ -44,18 +43,18 @@
                     <span>Population: 1</span>
                     <span>Supply: 10</span>
 
-                    <!-- ko foreach: units.items -->
+                    <!-- ko foreach: units -->
                     <div class="allocation-row">
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(key(),-1000);}">-1k</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(key(),-100);}">-100</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(key(),-10);}">-10</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(key(),-1);}">&nbsp;&lt;&nbsp;</button>
-                        <span class="allocation-item"><strong data-bind="text: value().name" style="text-align: left;"></strong><span class="allocation-item-count pull-right badge" data-bind="text: player[key()]"></span></span>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(key(),1);}">&nbsp;&gt;&nbsp;</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(key(),10);}">+10</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(key(),100);}">+100</button>
-                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.buy(key(),1000);}">+1k</button>
-                        <span class="label label-danger" data-bind="text: value().alertMessage"></span>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.train($index(),-1000);}">-1k</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.train($index(),-100);}">-100</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.train($index(),-10);}">-10</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.train($index(),-1);}">&nbsp;&lt;&nbsp;</button>
+                        <span class="allocation-item"><strong data-bind="text: name" style="text-align: left;"></strong><span class="allocation-item-count pull-right badge" data-bind="text: player.units[$index()]"></span></span>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.train($index(),1);}">&nbsp;&gt;&nbsp;</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.train($index(),10);}">+10</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.train($index(),100);}">+100</button>
+                        <button type="button" class="btn btn-default btn-xs" data-bind="click: function(){$parent.train($index(),1000);}">+1k</button>
+                        <span class="label label-danger" data-bind="text: alertMessage"></span>
                     </div>
                     <!-- /ko -->
 
@@ -81,13 +80,13 @@
                         <!-- Development -->
                         <div class="tab-pane active" id="home">
 
-                            <!-- ko foreach: buildings.items -->
+                            <!-- ko foreach: buildings -->
                             <div class="resource-button">
-                                <button type="button" class="btn btn-xs btn-default build-btn-title" data-bind="click: function(){$parent.build(key(),1);}"><span data-bind="text: value().name"></span></button>
-                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(key(),10);}">+10</button>
-                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(key(),100);}">+100</button>
-                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build(key(),100);}">+1k</button>
-                                <span class="resource-count pull-right badge" data-bind="text: $root.player[key()]"></span>
+                                <button type="button" class="btn btn-xs btn-default build-btn-title" data-bind="click: function(){$parent.build($index(),1);}"><span data-bind="text: name"></span></button>
+                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build($index(),10);}">+10</button>
+                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build($index(),100);}">+100</button>
+                                <button type="button" class="btn btn-default btn-xs build-multiplier-btn" data-bind="click: function(){$parent.build($index(),100);}">+1k</button>
+                                <span class="resource-count pull-right badge" data-bind="text: $root.player.buildings[$index()]"></span>
                                 <span class="label label-danger" data-bind="text: alertMessage"></span>
                             </div>
                             <!-- /ko -->

@@ -23,66 +23,68 @@ var Units = {
   miners: {
     name: "Miners",
     description: "Simple human laborer",
-    resourceCost: {
+    cost: {
       crystal: 60
     },
-    rechargeCost: {
+    consumes: {
       twinkies: 1
     },
-    minesFor: "crystal",
-    mineIncrement: 1
+    produces: {
+      crystal: 1
+    }
   },
-  twinkieHunters: {
+  hunters: {
     name: "Twinkie Hunters",
     description: "Search & Destroy",
-    resourceCost: {
+    cost: {
       crystal: 250
     },
-    rechargeCost: {
+    consumes: {
       twinkies: 1
     },
-    minesFor: "twinkies",
-    mineIncrement: 2
+    produces: {
+      twinkies: 2
+    }
   },
   marines: {
     name: "Marines",
     description: "The first to die, with distinction",
-    resourceCost: {
+    cost: {
       crystal: 30,
       xenon: 25
     },
-    rechargeCost: {
+    consumes: {
       twinkies: 1
     }
   },
-  t1000s: {
+  terminators: {
     name: "T-1000s",
     description: "Urgent advancement to chopper requested.",
-    resourceCost: {
+    cost: {
       crystal: 500
     },
-    rechargeCost: {
+    consumes: {
       twinkies: 1
     }
   },
   tanks: {
     name: "Tanks",
     description: "Area damage, slow.",
-    resourceCost: {
+    cost: {
       crystal: 500
     },
-    rechargeCost: {
+    consumes: {
       twinkies: 1.25
     }
   },
   millers: {
     name: "Matt Millers",
     description: "A.I. Researcher.",
-    resourceCost: {
+    cost: {
       crystal: 900,
       xenon: 300
     },
-    rechargeCost: {
+    consumes: {
       twinkies: 2
     }
   }
@@ -93,7 +95,7 @@ var Buildings = {
     name: "Supply Depot",
     description: "Supports <strong class='badge'>+10</strong> units",
     size: 3, // square meters
-    resourceCost: {
+    cost: {
       crystal: 80
     },
     visibility: 1
@@ -102,7 +104,7 @@ var Buildings = {
     name: "Barracks",
     description: "Supports <strong class='badge'>+10</strong> units",
     size: 3, // square meters
-    resourceCost: {
+    cost: {
       crystal: 80
     },
     visibility: 1
@@ -111,13 +113,12 @@ var Buildings = {
     name: "Research Facility",
     description: "Supports <strong class='badge'>+10</strong> units",
     size: 3, // square meters
-    resourceCost: {
+    cost: {
       crystal: 1200
     },
     visibility: 0,
-    researchPreReqs: [
+    prerequisites: [
       'math', 'science'
     ]
   }
-
 };
